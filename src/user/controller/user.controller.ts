@@ -8,12 +8,12 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post()
-  add(@Body() user: UserI): Observable<UserI> {
-    return this.userService.add(user);
+  addUser(@Body() user: UserI) {
+    return this.userService.addUser(user);
   }
 
   @Get()
-  findAll(): Observable<UserI[]> {
-    return this.userService.findAll();
+  findAllUsers(): Observable<UserI[]> {
+    return this.userService.findAllUsers();
   }
 }

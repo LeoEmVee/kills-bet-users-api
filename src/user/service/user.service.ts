@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { from, Observable } from 'rxjs';
 import { Repository } from 'typeorm';
@@ -12,11 +12,18 @@ export class UserService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
-  add(user: UserI): Observable<UserI> {
-    return from(this.userRepository.save(user));
+  // Adds new user and bet (checking if mail is not already in use)
+  async addUser(user: UserI): Promise<Observable<UserI>> {
+    const checkMail = await this.userRepository.findOne({ email: user.email });
+    if (checkMail)
+      throw new ConflictException(
+        'E-mail already exists. Please enter another one',
+      );
+    else return from(this.userRepository.save(user));
   }
 
-  findAll(): Observable<UserI[]> {
+  // Retrieves all users and bets
+  findAllUsers(): Observable<UserI[]> {
     return from(this.userRepository.find());
   }
 }
