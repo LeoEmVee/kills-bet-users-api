@@ -51,6 +51,11 @@ export class UserController {
     return this.userService.getAllStats();
   }
 
+  @Get('winner/:realKills')
+  getWinner(@Param('realKills') realKills: number): Promise<string> {
+    return this.userService.getWinner(realKills);
+  }
+
   @Delete('delete/:id')
   deleteUser(@Param('id') id: number): Promise<string> {
     return this.userService.deleteUser(id);

@@ -19,9 +19,14 @@ export class UserService {
   // Adds new user and bet (checking if mail is not already in use)
   async addUser(user: UserI): Promise<UserI> {
     const checkMail = await this.userRepository.findOne({ email: user.email });
+    const checkBet = await this.userRepository.findOne({ kills: user.kills });
     if (checkMail)
       throw new ConflictException(
         'E-mail already exists. Please enter another one',
+      );
+    if (checkBet)
+      throw new ConflictException(
+        'Bet already placed. Please enter another one',
       );
     else if (user.kills < 0)
       throw new NotAcceptableException('Bet must be 0 or more');
@@ -95,6 +100,26 @@ export class UserService {
     const avgBet = await this.getAvgBet();
 
     return `${totalBets}\n${totalKillsBet}\n${maxBet}\n${minBet}\n${avgBet}`;
+  }
+
+  // Retrieves winner
+  async getWinner(realKills: number): Promise<string> {
+    const totalBets = await this.findAllUsers();
+    let winner = totalBets[0];
+    const killsDiff = totalBets.map((bet) => Math.abs(bet.kills - realKills));
+    for (let i = 1; i < totalBets.length; i++) {
+      if (totalBets[i].kills <= realKills && killsDiff[i] < killsDiff[i - 1])
+        winner = totalBets[i];
+    }
+    return (
+      (winner.kills <= realKills &&
+        `Total kills: ${realKills}\nWinner: ${winner.name}\nBet: ${
+          winner.kills
+        }\nDifference with total kills: ${Math.abs(
+          winner.kills - realKills,
+        )}`) ||
+      'All bets were too high. There is no winner'
+    );
   }
 
   // Deletes user by id
