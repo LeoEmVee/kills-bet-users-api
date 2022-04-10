@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity } from '../models/user.entity';
@@ -25,6 +29,16 @@ export class UserService {
   async findAllUsers(): Promise<UserI[]> {
     const allUsers = await this.userRepository.find();
     return allUsers;
+  }
+
+  // Retrieves user by id
+  async getUser(id: number): Promise<UserI> {
+    const user = await this.userRepository.findOne(id);
+    if (!user)
+      throw new NotFoundException(
+        'User ID not found. Please enter another one',
+      );
+    return user;
   }
 
   // Retrieves total number of bets
@@ -70,7 +84,7 @@ export class UserService {
   }
 
   // Retrieves stats report
-  async getAllStats(): Promise<any> {
+  async getAllStats(): Promise<string> {
     const totalBets = await this.getTotalBets();
     const totalKillsBet = await this.getTotalKillsBet();
     const maxBet = await this.getMaxBet();

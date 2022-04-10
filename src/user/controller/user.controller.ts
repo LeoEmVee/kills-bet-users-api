@@ -16,6 +16,11 @@ export class UserController {
     return this.userService.findAllUsers();
   }
 
+  @Get('id/:id')
+  getUser(@Param('id') id: number): Promise<UserI> {
+    return this.userService.getUser(id);
+  }
+
   @Get('totalbets')
   getTotalBets(): Promise<string> {
     return this.userService.getTotalBets();
