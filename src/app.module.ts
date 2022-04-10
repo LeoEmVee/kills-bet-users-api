@@ -10,18 +10,18 @@ import { UserModule } from './user/user.module';
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
-      // URL TO BE USED IN DOCKER CONNECTION
-      // url: process.env.DATABASE_URL,
+      // URL to be used in Docker connection
+      url: process.env.DATABASE_URL,
 
       // Local connection details - start
-      host: process.env.DB_HOST,
-      port: Number(process.env.DB_PORT),
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
+      // host: process.env.DB_HOST,
+      // port: Number(process.env.DB_PORT),
+      // username: process.env.DB_USERNAME,
+      // password: process.env.DB_PASSWORD,
+      // database: process.env.DB_NAME,
       // Local connection details - end
       autoLoadEntities: true,
-      // synchronize: true (not to be used in production),
+      synchronize: true, // (not to be used in production),
     }),
     UserModule,
   ],

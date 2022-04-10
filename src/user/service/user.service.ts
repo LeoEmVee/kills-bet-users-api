@@ -34,7 +34,7 @@ export class UserService {
   }
 
   // Retrieves all users and bets
-  async findAllUsers(): Promise<UserI[]> {
+  async getAllUsers(): Promise<UserI[]> {
     const allUsers = await this.userRepository.find();
     return allUsers;
   }
@@ -51,12 +51,12 @@ export class UserService {
 
   // Retrieves total number of bets
   async getTotalBets(): Promise<string> {
-    const totalBets = await this.findAllUsers();
+    const totalBets = await this.getAllUsers();
     return `Total bets: ${totalBets.length} bets`;
   }
 
   async getTotalKillsBet(): Promise<string> {
-    const totalBets = await this.findAllUsers();
+    const totalBets = await this.getAllUsers();
     const totalKillsBet = totalBets
       .map((bet) => bet.kills)
       .reduce((p, c) => p + c);
@@ -66,7 +66,7 @@ export class UserService {
 
   // Retrieves highest bet
   async getMaxBet(): Promise<string> {
-    const totalBets = await this.findAllUsers();
+    const totalBets = await this.getAllUsers();
     const kills = totalBets.map((bet) => bet.kills);
     const maxBet = Math.max(...kills);
     const user = totalBets[kills.indexOf(maxBet)];
@@ -76,7 +76,7 @@ export class UserService {
 
   // Retrieves lowest bet
   async getMinBet(): Promise<string> {
-    const totalBets = await this.findAllUsers();
+    const totalBets = await this.getAllUsers();
     const kills = totalBets.map((bet) => bet.kills);
     const minBet = Math.min(...kills);
     const user = totalBets[kills.indexOf(minBet)];
@@ -85,7 +85,7 @@ export class UserService {
 
   // Retrieves average bet
   async getAvgBet(): Promise<string> {
-    const totalBets = await this.findAllUsers();
+    const totalBets = await this.getAllUsers();
     const kills = totalBets.map((bet) => bet.kills);
     const avgBet = Math.round(kills.reduce((p, c) => p + c) / kills.length);
     return `Average kills bet: ${avgBet} kills`;
@@ -104,7 +104,7 @@ export class UserService {
 
   // Retrieves winner
   async getWinner(realKills: number): Promise<string> {
-    const totalBets = await this.findAllUsers();
+    const totalBets = await this.getAllUsers();
     let winner = totalBets[0];
     const killsDiff = totalBets.map((bet) => Math.abs(bet.kills - realKills));
     for (let i = 1; i < totalBets.length; i++) {
