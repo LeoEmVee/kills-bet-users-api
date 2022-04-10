@@ -26,9 +26,4 @@ export class UserService {
   findAllUsers(): Observable<UserI[]> {
     return from(this.userRepository.find());
   }
-
-  // Retrieves total number of bets
-  getTotalBets(): number {
-    return Object.keys(this.findAllUsers())[0].length;
-  }
 }

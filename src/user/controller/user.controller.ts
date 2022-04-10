@@ -16,9 +16,4 @@ export class UserController {
   findAllUsers(): Observable<UserI[]> {
     return this.userService.findAllUsers();
   }
-
-  @Get('/totalbets')
-  getTotalBets(): number {
-    return this.userService.getTotalBets();
-  }
 }
