@@ -1,5 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { UserI } from '../models/user.interface';
 import { UserService } from '../service/user.service';
 
@@ -13,7 +12,37 @@ export class UserController {
   }
 
   @Get()
-  findAllUsers(): Observable<UserI[]> {
+  findAllUsers(): Promise<UserI[]> {
     return this.userService.findAllUsers();
+  }
+
+  @Get('totalbets')
+  getTotalBets(): Promise<string> {
+    return this.userService.getTotalBets();
+  }
+
+  @Get('totalkillsbet')
+  getTotalKillsBet(): Promise<string> {
+    return this.userService.getTotalKillsBet();
+  }
+
+  @Get('maxbet')
+  getMaxBet(): Promise<string> {
+    return this.userService.getMaxBet();
+  }
+
+  @Get('minbet')
+  getMinBet(): Promise<string> {
+    return this.userService.getMinBet();
+  }
+
+  @Get('avgbet')
+  getAvgBet(): Promise<string> {
+    return this.userService.getAvgBet();
+  }
+
+  @Get('allstats')
+  getAllStats(): Promise<string> {
+    return this.userService.getAllStats();
   }
 }
