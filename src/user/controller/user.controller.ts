@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { UserI } from '../models/user.interface';
 import { UserService } from '../service/user.service';
 
@@ -49,5 +49,10 @@ export class UserController {
   @Get('allstats')
   getAllStats(): Promise<string> {
     return this.userService.getAllStats();
+  }
+
+  @Delete('delete/:id')
+  deleteUser(@Param('id') id: number): Promise<string> {
+    return this.userService.deleteUser(id);
   }
 }

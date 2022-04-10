@@ -1,6 +1,7 @@
 import {
   ConflictException,
   Injectable,
+  NotAcceptableException,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -22,6 +23,8 @@ export class UserService {
       throw new ConflictException(
         'E-mail already exists. Please enter another one',
       );
+    else if (user.kills < 0)
+      throw new NotAcceptableException('Bet must be 0 or more');
     else return this.userRepository.save(user);
   }
 
@@ -92,5 +95,17 @@ export class UserService {
     const avgBet = await this.getAvgBet();
 
     return `${totalBets}\n${totalKillsBet}\n${maxBet}\n${minBet}\n${avgBet}`;
+  }
+
+  // Deletes user by id
+  async deleteUser(id: number): Promise<string> {
+    const user = await this.userRepository.findOne(id);
+    if (!user)
+      throw new NotFoundException(
+        'User ID not found. Please enter another one',
+      );
+    const deleted = user.id;
+    await this.userRepository.remove(user);
+    return `User ${deleted} deleted`;
   }
 }
