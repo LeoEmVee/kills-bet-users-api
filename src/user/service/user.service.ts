@@ -16,7 +16,7 @@ export class UserService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
-  // Adds new user and bet (checking if mail is not already in use)
+  // Adds new user and bet (checking if mail is not already in use and bet is not already placed)
   async addUser(user: UserI): Promise<UserI> {
     const checkMail = await this.userRepository.findOne({ email: user.email });
     const checkBet = await this.userRepository.findOne({ kills: user.kills });
@@ -55,6 +55,7 @@ export class UserService {
     return `Total bets: ${totalBets.length} bets`;
   }
 
+  // Retrieves total number of kills bet
   async getTotalKillsBet(): Promise<string> {
     const totalBets = await this.getAllUsers();
     const totalKillsBet = totalBets
@@ -91,7 +92,7 @@ export class UserService {
     return `Average kills bet: ${avgBet} kills`;
   }
 
-  // Retrieves stats report
+  // Retrieves all stats report
   async getAllStats(): Promise<string> {
     const totalBets = await this.getTotalBets();
     const totalKillsBet = await this.getTotalKillsBet();
@@ -105,20 +106,18 @@ export class UserService {
   // Retrieves winner
   async getWinner(realKills: number): Promise<string> {
     const totalBets = await this.getAllUsers();
-    let winner = totalBets[0];
-    const killsDiff = totalBets.map((bet) => Math.abs(bet.kills - realKills));
-    for (let i = 1; i < totalBets.length; i++) {
-      if (totalBets[i].kills <= realKills && killsDiff[i] < killsDiff[i - 1])
-        winner = totalBets[i];
-    }
+    const killDiff = totalBets.map((bet) => realKills - bet.kills);
+    const winningBet = Math.min(...killDiff.filter((e) => e >= 0));
+    const winner = totalBets[killDiff.indexOf(winningBet)];
+
     return (
-      (winner.kills <= realKills &&
+      (winner &&
         `Total kills: ${realKills}\nWinner: ${winner.name}\nBet: ${
           winner.kills
         }\nDifference with total kills: ${Math.abs(
           winner.kills - realKills,
         )}`) ||
-      'All bets were too high. There is no winner'
+      'All bets were too high. No winner'
     );
   }
 
