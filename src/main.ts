@@ -6,7 +6,7 @@ const port = process.env.SERVER_PORT;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   await app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
+    console.log(`Server is up and running`);
   });
 }
 bootstrap();

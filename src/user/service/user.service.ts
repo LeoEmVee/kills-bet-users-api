@@ -36,6 +36,8 @@ export class UserService {
   // Retrieves all users and bets
   async getAllUsers(): Promise<UserI[]> {
     const allUsers = await this.userRepository.find();
+    if (!allUsers.length)
+      throw new NotFoundException('There are no bets yet. Post some!');
     return allUsers;
   }
 
@@ -52,12 +54,16 @@ export class UserService {
   // Retrieves total number of bets
   async getTotalBets(): Promise<string> {
     const totalBets = await this.getAllUsers();
+    if (!totalBets)
+      throw new NotFoundException('There are no bets yet. Post some!');
     return `Total bets: ${totalBets.length} bets`;
   }
 
   // Retrieves total number of kills bet
   async getTotalKillsBet(): Promise<string> {
     const totalBets = await this.getAllUsers();
+    if (!totalBets)
+      throw new NotFoundException('There are no bets yet. Post some!');
     const totalKillsBet = totalBets
       .map((bet) => bet.kills)
       .reduce((p, c) => p + c);
@@ -67,6 +73,8 @@ export class UserService {
   // Retrieves highest bet
   async getMaxBet(): Promise<string> {
     const totalBets = await this.getAllUsers();
+    if (!totalBets)
+      throw new NotFoundException('There are no bets yet. Post some!');
     const kills = totalBets.map((bet) => bet.kills);
     const maxBet = Math.max(...kills);
     const user = totalBets[kills.indexOf(maxBet)];
@@ -76,6 +84,8 @@ export class UserService {
   // Retrieves lowest bet
   async getMinBet(): Promise<string> {
     const totalBets = await this.getAllUsers();
+    if (!totalBets)
+      throw new NotFoundException('There are no bets yet. Post some!');
     const kills = totalBets.map((bet) => bet.kills);
     const minBet = Math.min(...kills);
     const user = totalBets[kills.indexOf(minBet)];
@@ -85,6 +95,8 @@ export class UserService {
   // Retrieves average bet
   async getAvgBet(): Promise<string> {
     const totalBets = await this.getAllUsers();
+    if (!totalBets)
+      throw new NotFoundException('There are no bets yet. Post some!');
     const kills = totalBets.map((bet) => bet.kills);
     const avgBet = Math.round(kills.reduce((p, c) => p + c) / kills.length);
     return `Average kills bet: ${avgBet} kills`;
@@ -93,6 +105,8 @@ export class UserService {
   // Retrieves all stats report
   async getAllStats(): Promise<string> {
     const totalBets = await this.getTotalBets();
+    if (!totalBets)
+      throw new NotFoundException('There are no bets yet. Post some!');
     const totalKillsBet = await this.getTotalKillsBet();
     const maxBet = await this.getMaxBet();
     const minBet = await this.getMinBet();
@@ -103,6 +117,8 @@ export class UserService {
   // Retrieves winner
   async getWinner(realKills: number): Promise<string> {
     const totalBets = await this.getAllUsers();
+    if (!totalBets)
+      throw new NotFoundException('There are no bets yet. Post some!');
     const killDiff = totalBets.map((bet) => realKills - bet.kills);
     const winningBet = Math.min(...killDiff.filter((e) => e >= 0));
     const winner = totalBets[killDiff.indexOf(winningBet)];

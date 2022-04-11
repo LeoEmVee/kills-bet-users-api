@@ -63,6 +63,7 @@
     Url: http://localhost:8080/users/delete/`user.id` (number)
 
 # To test
-  - `npm run test` or `npm run test:watch`
-  - Check test cases in user.controller.spec.ts, user.service.spec.ts and app.controller.spec.ts
+  - `npm run test` or `npm run test:watch` for user controller and user service tests.
+  - `npm run test:e2e` or `npm run test:e2e:watch` for user module end to end tests.
+  - Check test cases in user.controller.spec.ts, user.service.spec.ts, app.controller.spec.ts and user.e2e-spec.ts
   - Check mock-data.ts file (under test folder)
