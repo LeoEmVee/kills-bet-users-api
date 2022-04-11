@@ -15,8 +15,10 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return a string', () => {
+      // OR 'should return "eSports Kills Bet API. Try http://localhost:8080/users/"'
+      expect(typeof appController.getHello()).toBe('string');
+      // OR expect(appController.getHello()).toBe('eSports Kills Bet API. Try http://localhost:8080/users/');
     });
   });
 });
