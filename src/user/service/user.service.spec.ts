@@ -11,14 +11,19 @@ describe('UserService', () => {
 
   const mockUserEntityRepository = {
     addUser: jest.fn().mockImplementation((user) => user),
+
     findOne: jest.fn().mockImplementation((value) => {
       for (let i = 0; i < data.length; i++) {
         if (Object.values(data[i]).includes(value)) return data[i];
       }
     }),
+
     save: jest.fn().mockImplementation((user) => Promise.resolve({ ...user })),
+
     getAllUsers: jest.fn().mockImplementation(() => data),
+
     find: jest.fn().mockImplementation(() => data),
+
     getUser: jest
       .fn()
       .mockImplementation((id) => mockUserEntityRepository.findOne(id)),
@@ -26,28 +31,33 @@ describe('UserService', () => {
     getTotalBets: jest.fn().mockImplementation(() => {
       return `Total bets: ${data.length} bets`;
     }),
+
     getTotalKillsBet: jest.fn().mockImplementation(() => {
       const result = data.map((el) => el.kills).reduce((p, c) => p + c);
       return `Total kills bet: ${result} kills`;
     }),
+
     getMaxBet: jest.fn().mockImplementation(() => {
       const kills = data.map((bet) => bet.kills);
       const maxBet = Math.max(...kills);
       const user = data[kills.indexOf(maxBet)];
       return `Highest kills bet: ${maxBet} kills, by ${user.name}`;
     }),
+
     getMinBet: jest.fn().mockImplementation(() => {
       const kills = data.map((bet) => bet.kills);
       const maxBet = Math.min(...kills);
       const user = data[kills.indexOf(maxBet)];
       return `Lowest kills bet: ${maxBet} kills, by ${user.name}`;
     }),
+
     getAvgBet: jest.fn().mockImplementation(() => {
       const result = Math.round(
         data.map((el) => el.kills).reduce((p, c) => p + c) / data.length,
       );
       return `Average kills bet: ${result} kills`;
     }),
+
     getAllStats: jest.fn().mockImplementation(() => {
       const totalBets = mockUserEntityRepository.getTotalBets();
       const totalKillsBet = mockUserEntityRepository.getTotalKillsBet();
@@ -56,6 +66,7 @@ describe('UserService', () => {
       const avgBet = mockUserEntityRepository.getAvgBet();
       return `${totalBets}\n${totalKillsBet}\n${maxBet}\n${minBet}\n${avgBet}`;
     }),
+
     getWinner: jest.fn().mockImplementation((realKills) => {
       const killDiff = data.map((bet) => realKills - bet.kills);
       const winningBet = Math.min(...killDiff.filter((e) => e >= 0));
@@ -70,6 +81,7 @@ describe('UserService', () => {
         'All bets were too high. No winner'
       );
     }),
+
     deleteUser: jest.fn().mockImplementation((id) => {
       const result = mockUserEntityRepository.getUser(id);
       return `User ${result.id} deleted`;

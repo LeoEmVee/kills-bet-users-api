@@ -12,7 +12,6 @@ import { UserModule } from './user/user.module';
       type: 'postgres',
       // URL to be used in Docker connection
       url: process.env.DATABASE_URL,
-
       // Local connection details - start
       // host: process.env.DB_HOST,
       // port: Number(process.env.DB_PORT),

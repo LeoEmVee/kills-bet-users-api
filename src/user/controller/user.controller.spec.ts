@@ -14,31 +14,39 @@ describe('UserController', () => {
         ...user,
       };
     }),
+
     getAllUsers: jest.fn(() => {
       return data;
     }),
+
     getUser: jest.fn((id) => {
       for (let i = 0; i < data.length; i++) {
         if (data[i].id === id) return data[i];
       }
     }),
+
     getTotalBets: jest.fn(() => {
       return data.length;
     }),
+
     getTotalKillsBet: jest.fn(() => {
       return data.map((el) => el.kills).reduce((p, c) => p + c);
     }),
+
     getMaxBet: jest.fn(() => {
       return Math.max(...data.map((el) => el.kills));
     }),
+
     getMinBet: jest.fn(() => {
       return Math.min(...data.map((el) => el.kills));
     }),
+
     getAvgBet: jest.fn(() => {
       return Math.round(
         data.map((el) => el.kills).reduce((p, c) => p + c) / data.length,
       );
     }),
+
     getAllStats: jest.fn(() => {
       const totalBets = mockUserService.getTotalBets();
       const totalKillsBet = mockUserService.getTotalKillsBet();
@@ -47,12 +55,14 @@ describe('UserController', () => {
       const avgBet = mockUserService.getAvgBet();
       return `${totalBets}\n${totalKillsBet}\n${maxBet}\n${minBet}\n${avgBet}`;
     }),
+
     getWinner: jest.fn((realKills) => {
       const killDiff = data.map((bet) => realKills - bet.kills);
       const winningBet = Math.min(...killDiff.filter((e) => e >= 0));
       const winner = data[killDiff.indexOf(winningBet)];
       return winner;
     }),
+
     deleteUser: jest.fn((id) => {
       return mockUserService.getUser(id);
     }),

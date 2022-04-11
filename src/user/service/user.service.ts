@@ -61,7 +61,6 @@ export class UserService {
     const totalKillsBet = totalBets
       .map((bet) => bet.kills)
       .reduce((p, c) => p + c);
-
     return `Total kills bet: ${totalKillsBet} kills`;
   }
 
@@ -71,7 +70,6 @@ export class UserService {
     const kills = totalBets.map((bet) => bet.kills);
     const maxBet = Math.max(...kills);
     const user = totalBets[kills.indexOf(maxBet)];
-
     return `Highest kills bet: ${maxBet} kills, by ${user.name}`;
   }
 
@@ -99,7 +97,6 @@ export class UserService {
     const maxBet = await this.getMaxBet();
     const minBet = await this.getMinBet();
     const avgBet = await this.getAvgBet();
-
     return `${totalBets}\n${totalKillsBet}\n${maxBet}\n${minBet}\n${avgBet}`;
   }
 
@@ -109,7 +106,6 @@ export class UserService {
     const killDiff = totalBets.map((bet) => realKills - bet.kills);
     const winningBet = Math.min(...killDiff.filter((e) => e >= 0));
     const winner = totalBets[killDiff.indexOf(winningBet)];
-
     return (
       (winner &&
         `Total kills: ${realKills}\nWinner: ${winner.name}\nBet: ${
