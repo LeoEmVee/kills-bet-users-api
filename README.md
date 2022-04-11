@@ -7,6 +7,7 @@
   - Clone the repo
   - `npm i`
   - `docker-compose up` (Docker must be running)
+  - Runs on port 8080
 
 # To run locally
   - Clone the repo
@@ -14,9 +15,12 @@
   - Create .env file for the environmental variables in app.module.ts
   - In app.module.ts, uncomment lines from 17 to 21 and comment line 14 (Docker connection)
   - `npm run start:dev` (PostgreSQL must be running)
+  - Runs on port defined in your .env file (I am using 3000)
 
 # To try the API
   You can try the API with [Postman](https://www.postman.com/). It is much easier than from the browser address bar. Requests and routes:
+
+  **REMEMBER: With Docker we are running on port 8080. If you run the API locally, type the port defined on your .env file (I am using 3000)**
   
   - POST addUser: Adds new user and bet (checking if mail is not already in use and bet is not already placed)
     Url: http://localhost:8080/users/
@@ -61,4 +65,4 @@
 # To test
 
   - `npm run test` or `npm run test:watch`
-  - Check test cases in user.controller.spec.ts user.service.spec.ts and app.controller.spec.ts
+  - Check test cases in user.controller.spec.ts, user.service.spec.ts and app.controller.spec.ts

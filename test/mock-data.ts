@@ -1,0 +1,86 @@
+export const mockData = [
+  {
+    id: 1,
+    email: 'uno@mail.com',
+    name: 'Teresa Térez',
+    kills: 20,
+  },
+  {
+    id: 2,
+    email: 'dos@mail.com',
+    name: 'Juana Juánez',
+    kills: 21,
+  },
+  {
+    id: 3,
+    email: 'tres@mail.com',
+    name: 'Pedro Pérez',
+    kills: 23,
+  },
+  {
+    id: 4,
+    email: 'cuatro@mail.com',
+    name: 'Berta Alberts',
+    kills: 24,
+  },
+  {
+    id: 5,
+    email: 'cinco@mail.com',
+    name: 'Luis Luísez',
+    kills: 25,
+  },
+  {
+    id: 6,
+    email: 'seis@mail.com',
+    name: 'Alberto Albers',
+    kills: 26,
+  },
+  {
+    id: 7,
+    email: 'siete@mail.com',
+    name: 'Roberta Rubio',
+    kills: 27,
+  },
+  {
+    id: 8,
+    email: 'ocho@mail.com',
+    name: 'Quico Quíquez',
+    kills: 28,
+  },
+  {
+    id: 9,
+    email: 'nueve@mail.com',
+    name: 'Antonia Antúnez',
+    kills: 29,
+  },
+  {
+    id: 10,
+    email: 'diez@mail.com',
+    name: 'Carlos Carling',
+    kills: 30,
+  },
+  {
+    id: 11,
+    email: 'once@mail.com',
+    name: 'Ricardo Ricárdez',
+    kills: 1,
+  },
+  {
+    id: 12,
+    email: 'doce@mail.com',
+    name: 'Tomás Tomo',
+    kills: 5,
+  },
+  {
+    id: 13,
+    email: 'trece@mail.com',
+    name: 'Ramón Ramírez',
+    kills: 9,
+  },
+  {
+    id: 14,
+    email: 'catorce@mail.com',
+    name: 'Alex Alexander',
+    kills: 16,
+  },
+];
