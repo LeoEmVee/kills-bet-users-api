@@ -47,7 +47,6 @@ describe('UserController', () => {
       const avgBet = mockUserService.getAvgBet();
       return `${totalBets}\n${totalKillsBet}\n${maxBet}\n${minBet}\n${avgBet}`;
     }),
-
     getWinner: jest.fn((realKills) => {
       const killDiff = data.map((bet) => realKills - bet.kills);
       const winningBet = Math.min(...killDiff.filter((e) => e >= 0));
@@ -75,7 +74,7 @@ describe('UserController', () => {
     expect(controller).toBeDefined();
   });
 
-  it('should return created user', () => {
+  it('should create a new user and return it', () => {
     const mockNewUser = {
       id: 0,
       email: 'test@mail.com',
